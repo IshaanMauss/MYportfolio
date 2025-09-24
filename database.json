@@ -1,0 +1,69 @@
+[
+  {
+    "title": "Portfolio Forger",
+    "description": "Craft stunning, AI-powered portfolios that get you hired. Our platform helps you write professional bios, tailor unique portfolios for specific recruiters, and instantly export a downloadable, theme-matched resume.",
+    "githubUrl": "https://github.com/IshaanMauss/portfolio-forge-app",
+    "liveUrl": "https://your-netlify-link-for-this-project.netlify.app/",
+    "videoUrl": "",
+    "tags": [
+      "React",
+      "Firebase",
+      "JavaScript",
+      "CSS",
+      "HTML"
+    ]
+  },
+  {
+    "title": "JavaScript Tetris Game",
+    "description": "A classic arcade game built from the ground up with vanilla JavaScript, HTML5 Canvas for rendering, and complex logic for piece manipulation and collision detection.",
+    "githubUrl": "https://github.com/IshaanMauss/js-tetris",
+    "liveUrl": "https://nostalgic-tetrisgame.netlify.app/",
+    "videoUrl": "",
+    "tags": [
+      "JavaScript (ES6)",
+      "HTML5 Canvas",
+      "CSS"
+    ]
+  },
+  {
+    "title": "Dynamic Quiz App",
+    "description": "An interactive quiz application that fetches questions from an external API, tracks scores, and provides a dynamic user experience, showcasing asynchronous JavaScript.",
+    "githubUrl": "https://github.com/IshaanMauss/quiz-app",
+    "liveUrl": "https://myfunquizz.netlify.app/",
+    "videoUrl": "",
+    "tags": [
+      "JavaScript",
+      "Fetch API",
+      "HTML",
+      "CSS"
+    ]
+  },
+  {
+    "title": "Movies & TV Show Browser",
+    "description": "CineTrack is a sleek web application for tracking and discovering movies and TV shows, built with HTML, CSS, and JavaScript. It uses the TMDb API to fetch and display dynamic content for a rich user experience.",
+    "githubUrl": "https://github.com/IshaanMauss/cineTrack",
+    "liveUrl": "https://trackyourshows.netlify.app/",
+    "videoUrl": "",
+    "tags": [
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Axios",
+      "TMDb API"
+    ]
+  },
+
+
+  {
+    "title": "QR CODE GENERATOR",
+    "description": "INSTANT QR CODE GENRATOR FOR ANY VALID LINK",
+    "githubUrl": "https://github.com/IshaanMauss/QR-CODE-GENERATOR",
+    "liveUrl": "https://ishaanmauss.github.io/QR-CODE-GENERATOR/",
+    "videoUrl": "",
+    "tags": [
+      "HTML5",
+      "CSS3",
+      "JAVASCRIPT(ES6+)"
+    ]
+  }
+]

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Project</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+</head>
+<body>
+
+    <main class="form-container">
+        <h1>Add a New Project</h1>
+        <p>Fill out the details below. Paste a GitHub URL to auto-fill project details.</p>
+
+        <div class="add-project-layout">
+            <form id="project-form" class="project-form-grid">
+                <div class="form-group">
+                    <label for="githubUrl">GitHub URL</label>
+                    <div class="input-with-button">
+                        <input type="url" id="githubUrl" required>
+                        <button type="button" id="fetch-github-btn" class="btn-fetch">Fetch Repo Info</button>
+                    </div>
+                    <small id="github-status"></small>
+                </div>
+
+                <div class="form-group">
+                    <label for="title">Project Title</label>
+                    <input type="text" id="title" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea id="description" rows="4" required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="liveUrl">Live Demo URL</label>
+                    <input type="url" id="liveUrl">
+                </div>
+
+                <div class="form-group">
+                    <label for="videoUrl">Video URL (e.g., from Cloudinary)</label>
+                    <input type="url" id="videoUrl">
+                </div>
+
+                <div class="form-group">
+                    <label for="tags">Technology Tags (comma-separated)</label>
+                    <input type="text" id="tags" placeholder="Auto-filled from README or enter manually" required>
+                </div>
+
+                <button type="submit" class="btn-generate">Generate Project Data</button>
+                 <button type="button" id="clear-form-btn" class="btn-clear">Clear Form</button>
+            </form>
+
+            <div class="live-preview-container">
+                <h2>Live Preview</h2>
+                <div id="live-preview-card" class="project-card">
+                    <div class="card-header">
+                        <i class="fas fa-folder"></i>
+                        <div class="card-links">
+                            <a href="#" target="_blank" aria-label="GitHub Code"><i class="fab fa-github"></i></a>
+                            <a href="#" target="_blank" aria-label="Live Demo"><i class="fas fa-external-link-alt"></i></a>
+                        </div>
+                    </div>
+                    <div class="video-container-preview" style="display: none;">
+                        <video controls muted loop playsinline>
+                            <source src="" type="video/mp4">
+                        </video>
+                    </div>
+                    <h3>Your Project Title</h3>
+                    <p>Your project description will appear here.</p>
+                    <footer>
+                        <span>Tag1</span>
+                        <span>Tag2</span>
+                    </footer>
+                </div>
+            </div>
+        </div>
+
+
+        <div id="output-container" style="display:none;">
+            <h2>Generated JSON</h2>
+            <textarea id="json-output" rows="15" readonly></textarea>
+            <button id="copy-json-btn" class="btn-copy">Copy to Clipboard</button>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,11 @@
+:root {
+    --bg-color: #16161a;           /* Dark Charcoal */
+    --card-bg-color: rgba(35, 35, 40, 0.6); /* Translucent Grey */
+    --primary-color: #72f7be;      /* Vibrant Mint Green */
+    --heading-color: #fffffe;      /* Pure White for headings */
+    --accent-text-color: #fffffe;  /* Pure White for bright text */
+    --body-text-color: #94a1b2;    /* Muted Grey for paragraphs */
+    --card-text-color: #94a1b2;    /* Muted Grey for card text */
+    --font-sans: 'Poppins', sans-serif;
+    --transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+}

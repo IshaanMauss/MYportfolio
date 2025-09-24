@@ -1,0 +1,548 @@
+/* ------------------- */
+/* 1. Custom Properties (Your Vibrant Palette) */
+/* ------------------- */
+/* PURANE WALE KO ISSE REPLACE KAREIN */
+:root {
+    --bg-color: #1a1423;           /* Deep, Dark Plum/Indigo */
+    --card-bg-color: rgba(43, 33, 61, 0.6); /* Translucent Dark Purple */
+    --primary-color: #f72585;      /* Bright, Energetic Magenta */
+    --heading-color: #e4d9ff;      /* Light Lavender for headings */
+    --accent-text-color: #e4d9ff;  /* Light Lavender for bright text */
+    --body-text-color: #a393bf;    /* Muted Purple/Grey for paragraphs */
+    --card-text-color: #a393bf;    /* Muted Purple/Grey for card text */
+    --font-sans: 'Poppins', sans-serif;
+    --transition: all 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+/* YEH NAYA CODE ADD KAREIN */
+#particles-js {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1; /* Isse background sabke peeche chala jaayega */
+}
+
+/* ------------------- */
+/* 2. Reset & Base Styles */
+/* ------------------- */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: var(--font-sans);
+    background-color: var(--bg-color);
+    color: var(--body-text-color); /* Using the softer white for paragraphs */
+    line-height: 1.6;
+}
+
+/* ------------------- */
+/* 3. Navigation */
+/* ------------------- */
+/* .main-header KO ISSE UPDATE KAREIN */
+/* ------------------- */
+/* 3. Navigation */
+/* ------------------- */
+.main-header {
+    padding: 1rem 2rem;
+    position: sticky;
+    top: 0;
+    /* This now uses the dark plum color for the glassy effect */
+    background-color: rgba(26, 20, 35, 0.85); 
+    backdrop-filter: blur(10px);
+    z-index: 10;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    /* The logo and its border now use the new magenta primary color */
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 3rem;
+    border: 2px solid var(--primary-color);
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 5.5rem;
+}
+.projects{
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--accent-text-color);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.contact{
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--accent-text-color);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.nav-links a {
+    color: var(--accent-text-color);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+/* Links will now turn magenta on hover */
+.nav-links a:hover {
+    color: var(--primary-color);
+}
+
+/* ------------------- */
+/* 4. Hero Section */
+/* ------------------- */
+.hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 6rem 2rem;
+    max-width: 900px;
+    margin: 0 auto;
+    opacity: 0;
+    animation: fadeIn 1s ease-in-out forwards;
+}
+
+.profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+.hero-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: var(--accent-text-color); /* Using bright text */
+    margin-bottom: 0.5rem;
+}
+
+.hero-subtitle {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    color: var(--heading-color); /* Using Lavender Pink */
+    font-weight: 400;
+    margin-bottom: 2rem;
+}
+
+.hero-description {
+    max-width: 600px;
+    margin-bottom: 2rem;
+}
+
+.social-links {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.social-links a {
+    color: var(--accent-text-color);
+    font-size: 2rem;
+    transition: var(--transition);
+}
+
+.social-links a:hover {
+    color: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+/* ------------------- */
+/* 5. Projects Section */
+/* ------------------- */
+.projects-section {
+    padding: 6rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    color: var(--accent-text-color);
+    margin-bottom: 3rem;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.project-card {
+    background-color: var(--card-bg-color); /* Translucent card background */
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(100, 255, 218, 0.1); /* Halka sa mint border */
+    color: var(--card-text-color);
+    padding: 2rem;
+    border-radius: 4px;
+    box-shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.card-links a {
+    color: var(--primary-color);
+    font-size: 1.2rem;
+    margin-left: 1rem;
+    transition: var(--transition);
+}
+
+.project-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 20px 30px -15px rgba(2,12,27,0.7);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    color: var(--primary-color); /* Rose Pink for the folder icon */
+    font-size: 2.5rem;
+}
+
+
+
+
+.card-links a:hover {
+    color: var(--primary-color);
+}
+
+.project-card h3 {
+    color: var(--heading-color);
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+}
+
+.project-card footer {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1rem;
+    font-size: 0.8rem;
+    color: var(--card-text-color);
+}
+
+/* ------------------- */
+/* 6. Footer */
+/* ------------------- */
+.footer {
+    padding: 2rem;
+    text-align: center;
+    
+    color: var(--heading-color);
+}
+/* .footer-content{
+    max-width: 900px;
+    height: 50px;
+    margin: 0 auto;
+    color: red ;
+} */
+
+/* ------------------- */
+/* 7. Animations & Reveal on Scroll */
+/* ------------------- */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.project-card.reveal:nth-child(1) { transition-delay: 100ms; }
+.project-card.reveal:nth-child(2) { transition-delay: 200ms; }
+.project-card.reveal:nth-child(3) { transition-delay: 300ms; }
+
+
+/* ------------------- */
+/* 8. Media Queries (Responsiveness) */
+/* ------------------- */
+@media (max-width: 768px) {
+    .hero, .projects-section {
+        padding: 4rem 1.5rem;
+    }
+    
+    .nav-links {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero, .projects-section {
+        padding: 3rem 1rem;
+    }
+}
+
+/* --- Additions to style.css --- */
+
+/* Add Project Button */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+}
+
+.btn-add-project {
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.btn-add-project:hover {
+    opacity: 0.8;
+}
+
+/* Responsive Video Container */
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    border-radius: 4px;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+/* Error Message Styling */
+.error-message {
+    color: var(--primary-color);
+    text-align: center;
+    width: 100%;
+}
+
+
+/* --- Styles for add-project.html --- */
+.form-container {
+    max-width: 800px;
+    margin: 4rem auto;
+    padding: 2rem;
+    color: var(--accent-text-color);
+}
+
+.form-container h1 {
+    color: var(--primary-color);
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--heading-color);
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border-radius: 4px;
+    border: 2px solid var(--heading-color);
+    background-color: var(--bg-color);
+    color: var(--accent-text-color);
+    font-size: 1rem;
+    font-family: var(--font-sans);
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.btn-generate {
+    width: 100%;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--primary-color);
+    color: var(--bg-color);
+    transition: var(--transition);
+}
+
+.btn-generate:hover {
+    opacity: 0.8;
+}
+
+#output-container {
+    margin-top: 2rem;
+}
+
+#json-output {
+    width: 100%;
+    background-color: #2c0d58;
+    color: #f5f5f5;
+    border: 1px solid var(--primary-color);
+    border-radius: 4px;
+}
+/* --- Styles for a Smarter add-project.html --- */
+
+.add-project-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: flex-start;
+}
+
+.project-form-grid {
+    display: flex;
+    flex-direction: column;
+}
+
+.input-with-button {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.input-with-button input {
+    flex-grow: 1;
+}
+
+.btn-fetch {
+    padding: 0.8rem;
+    border: none;
+    border-radius: 4px;
+    background-color: var(--heading-color);
+    color: var(--bg-color);
+    cursor: pointer;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: var(--transition);
+}
+
+.btn-fetch:hover {
+    opacity: 0.8;
+}
+
+#github-status {
+    display: block;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    height: 1rem;
+}
+
+.live-preview-container {
+    position: sticky;
+    top: 4rem;
+}
+
+.live-preview-container h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: var(--heading-color);
+}
+
+/* Ensure live preview card inherits project-card styles */
+#live-preview-card {
+    transform: none !important; /* Override hover effect */
+    box-shadow: 0 10px 30px -15px rgba(2,12,27,0.7);
+}
+
+#live-preview-card footer {
+    flex-wrap: wrap;
+}
+.video-container-preview {
+     position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+    margin-bottom: 1.5rem;
+    border-radius: 4px;
+}
+.video-container-preview video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+.btn-copy, .btn-clear {
+    display: block;
+    width: 100%;
+    margin-top: 1rem;
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    transition: var(--transition);
+}
+
+.btn-copy {
+     background-color: #4CAF50; /* A nice green for success */
+     color: white;
+}
+.btn-copy:hover {
+    opacity: 0.8;
+}
+
+.btn-clear {
+    background-color: var(--heading-color);
+    color: var(--bg-color);
+}
+.btn-clear:hover{
+    opacity: 0.8;
+}
+
+
+/* Responsive adjustments for the form page */
+@media (max-width: 900px) {
+    .add-project-layout {
+        grid-template-columns: 1fr;
+    }
+    .live-preview-container {
+        position: static; /* Unstick the preview on smaller screens */
+        margin-top: 3rem;
+    }
+}
