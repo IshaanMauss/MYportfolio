@@ -240,10 +240,12 @@ nav {
 .project-card footer {
     margin-top: 1.5rem;
     display: flex;
+    flex-wrap: wrap; /* This line is added to fix the overflow */
     gap: 1rem;
     font-size: 0.8rem;
     color: var(--card-text-color);
 }
+
 
 /* ------------------- */
 /* 6. Footer */

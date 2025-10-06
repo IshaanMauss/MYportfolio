@@ -3,14 +3,15 @@
     "title": "Portfolio Forger",
     "description": "Craft stunning, AI-powered portfolios that get you hired. Our platform helps you write professional bios, tailor unique portfolios for specific recruiters, and instantly export a downloadable, theme-matched resume.",
     "githubUrl": "https://github.com/IshaanMauss/portfolio-forge-app",
-    "liveUrl": "https://your-netlify-link-for-this-project.netlify.app/",
+    "liveUrl": "https://portfolio-forge-4e0a9.web.app/",
     "videoUrl": "",
     "tags": [
       "React",
       "Firebase",
       "JavaScript",
       "CSS",
-      "HTML"
+      "HTML",
+      "Python"
     ]
   },
   {
