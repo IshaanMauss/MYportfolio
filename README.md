@@ -4,7 +4,7 @@ Welcome to the repository for my personal developer portfolio! This project is a
 
 ### ✨ [View the Live Demo Here!](https://lookupmyportfolio.netlify.app/)
 
-*(Note: Replace the link above with your actual GitHub Pages URL)*
+
 
 ---
 
