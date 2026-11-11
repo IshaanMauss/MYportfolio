@@ -1,0 +1,383 @@
+{
+  "profile": {
+    "name": "Ishaan Chaturvedi",
+    "firstName": "Ishaan",
+    "monogram": "IC",
+    "roles": [
+      "Backend systems",
+      "Multi-tenant SaaS",
+      "Database internals",
+      "Security-minded design"
+    ],
+    "headline": "I design the systems behind the product.",
+    "bio": "Principal engineer on Paperly, a multi-tenant EdTech platform that generates verified, parametric IGCSE and IB exam questions. I care about database internals, security boundaries and architecture that holds up under real use.",
+    "photo": "images/ishaan.jpg",
+    "photoAlt": "Portrait of Ishaan Chaturvedi",
+    "resume": "",
+    "links": {
+      "github": "https://github.com/IshaanMauss",
+      "linkedin": "https://linkedin.com/in/ishaan-chaturvedi-9a58a533b",
+      "email": "ishaanchaturvedi444@gmail.com"
+    },
+    "trace": [
+      {
+        "k": "req",
+        "t": "POST /v1/questions/generate"
+      },
+      {
+        "k": "ok",
+        "t": "resolve tenant + entitlements"
+      },
+      {
+        "k": "ok",
+        "t": "SET LOCAL app.teacher_id"
+      },
+      {
+        "k": "ok",
+        "t": "quota check before any write"
+      },
+      {
+        "k": "ok",
+        "t": "RLS-scoped query"
+      },
+      {
+        "k": "ok",
+        "t": "audit log appended"
+      },
+      {
+        "k": "res",
+        "t": "200 OK"
+      }
+    ]
+  },
+  "systems": [
+    {
+      "id": "isolation",
+      "topic": "Multi-tenancy",
+      "title": "Keeping one tenant's data away from another's",
+      "summary": "Making isolation a property of the database, not a promise every query has to keep.",
+      "problem": "In a multi-tenant app, one forgotten WHERE clause leaks customer data. Trusting every query to remember the filter does not scale, and the app may resolve identity itself instead of using a managed auth layer.",
+      "approach": "Push the rule into Postgres with row-level security. Each request opens a transaction and sets the tenant with SET LOCAL, and the policies read that setting. I worked through the failure modes before shipping: context bleeding between pooled connections, what happens when the setting is missing, and how to roll it back.",
+      "outcome": "The context dies with the transaction, so a pooled connection can never carry a previous tenant's identity. A missing context fails closed.",
+      "steps": [
+        "Request",
+        "Resolve tenant",
+        "BEGIN + SET LOCAL",
+        "RLS policy check",
+        "Query",
+        "COMMIT (context gone)"
+      ],
+      "tags": [
+        "PostgreSQL",
+        "Row-level security",
+        "Connection pooling",
+        "FastAPI"
+      ]
+    },
+    {
+      "id": "limits",
+      "topic": "Billing and limits",
+      "title": "Enforcing plans and usage limits",
+      "summary": "Limits that are decided on the server and can't be bypassed from the client.",
+      "problem": "A SaaS with organisations, tiers and metered AI calls needs limits users cannot get around, and a record of what happened when someone disputes a charge.",
+      "approach": "Organisation-based tenancy with a hybrid entitlement schema: normalised columns for hard limits, JSON for feature flags. An enforcement module checks quota before any database write or LLM call, quota writes are atomic, and audit logs are append-only.",
+      "outcome": "Limits hold under concurrent requests, expensive calls are gated before they cost money, and every decision leaves an audit trail.",
+      "steps": [
+        "Request",
+        "Load entitlements",
+        "Check quota",
+        "Atomic decrement",
+        "Write / LLM call",
+        "Append audit log"
+      ],
+      "tags": [
+        "FastAPI",
+        "PostgreSQL",
+        "Audit logging",
+        "Quota enforcement"
+      ]
+    },
+    {
+      "id": "llm",
+      "topic": "AI reliability",
+      "title": "Trusting (and not trusting) LLM output",
+      "summary": "Putting deterministic checks around a probabilistic model.",
+      "problem": "An LLM can extract structure from messy documents, but it also hallucinates fields, misaligns identifiers and sometimes contradicts the metadata it was given.",
+      "approach": "Treat model output as untrusted input. Ground truth comes from deterministic sources such as filenames. Sanitisers strip hallucinated fields and formatting noise, sequence and poisoning guards reject bad batches, and a reconciler aligns related documents through deterministic repair passes. Prompts are hardened against the failures seen on real documents.",
+      "outcome": "Model output passes verifiable gates before it is stored, so failures are caught by code and not by a person reading the result.",
+      "steps": [
+        "Document in",
+        "LLM extraction",
+        "Sanitise",
+        "Sequence guard",
+        "Reconcile (repair passes)",
+        "Store"
+      ],
+      "tags": [
+        "Gemini API",
+        "Prompt hardening",
+        "LLM output validation",
+        "Data validation"
+      ]
+    },
+    {
+      "id": "generation",
+      "topic": "Correctness",
+      "title": "Generating unlimited variants that are always valid",
+      "summary": "Randomness that can never produce a broken or unsolvable result.",
+      "problem": "Randomising numbers in a question or test case often produces ugly or unsolvable variants, such as quadratics with irrational roots when the answer should be clean.",
+      "approach": "Build backwards. Pick the answer first, derive the inputs from it (Vieta's formulas for quadratics), then fill the template. Computation is separated from display, a two-layer schema keeps preview text apart from the generative template, and nothing ships until an admin approves it.",
+      "outcome": "Every generated variant has the clean answer the template promised, and a bad template cannot reach a user.",
+      "steps": [
+        "Choose answer",
+        "Derive inputs (Vieta)",
+        "Fill {var} template",
+        "Render LaTeX / figure",
+        "Approval gate",
+        "Serve"
+      ],
+      "tags": [
+        "Python",
+        "LaTeX",
+        "SVG",
+        "Template engine"
+      ]
+    },
+    {
+      "id": "retries",
+      "topic": "Reliability",
+      "title": "Making retries safe",
+      "summary": "Making sure a retried webhook can only ever be processed once.",
+      "problem": "Payment providers retry webhooks. Process the same event twice and you can fulfil an order twice, and a check-then-insert in application code leaves a race window.",
+      "approach": "Let the database be the lock. Insert the event against a compound unique index first, and whichever request wins the insert is the only one that processes it. Related hardening: validate uploads by magic bytes, not by trusting the file extension.",
+      "outcome": "Duplicate deliveries become harmless no-ops, even when two arrive at the same instant.",
+      "steps": [
+        "Webhook in",
+        "Insert event key",
+        "Unique index decides",
+        "Winner processes",
+        "Duplicates ack and stop"
+      ],
+      "tags": [
+        "Node.js",
+        "MongoDB",
+        "Idempotency",
+        "Webhooks"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "title": "Paperly",
+      "category": "Full-stack / SaaS",
+      "featured": true,
+      "description": "EdTech SaaS that generates verified, parametric IGCSE and IB exam questions. Includes a teacher-facing module, an admin back office, an AI-assisted ingestion pipeline and a multi-tenant entitlement layer.",
+      "githubUrl": "",
+      "liveUrl": "",
+      "videoUrl": "",
+      "private": true,
+      "tags": [
+        "FastAPI",
+        "PostgreSQL",
+        "Supabase",
+        "Python",
+        "Multi-tenancy"
+      ],
+      "filters": [
+        "Full-stack",
+        "Backend"
+      ]
+    },
+    {
+      "title": "NeuroCogno",
+      "category": "Full-stack / Client work",
+      "featured": true,
+      "description": "Node.js CMS and payment platform hardened for client handover: idempotent Razorpay webhooks, magic-byte upload validation and a scoped content-slot model.",
+      "githubUrl": "",
+      "liveUrl": "",
+      "videoUrl": "",
+      "private": true,
+      "tags": [
+        "Node.js",
+        "Express",
+        "MongoDB",
+        "Razorpay"
+      ],
+      "filters": [
+        "Full-stack",
+        "Backend"
+      ]
+    },
+    {
+      "title": "Global Multiplayer Chess",
+      "category": "Full-stack / Realtime",
+      "featured": true,
+      "description": "A full-stack, real-time multiplayer chess application featuring global matchmaking, private rooms, server-side timer synchronization, and a custom-built Minimax AI engine for offline play.",
+      "githubUrl": "https://github.com/ishaanMauss/Chessgame",
+      "liveUrl": "https://chessgame321.onrender.com",
+      "videoUrl": "",
+      "tags": [
+        "Node.js",
+        "Socket.io",
+        "Express",
+        "JavaScript",
+        "Tailwind CSS"
+      ]
+    },
+    {
+      "title": "Portfolio Forge",
+      "category": "Full-stack / Product",
+      "featured": false,
+      "description": "Craft portfolios that get you hired. Write professional bios, tailor unique portfolios for specific recruiters, and export a downloadable, theme-matched resume.",
+      "githubUrl": "https://github.com/IshaanMauss/portfolio-forge-app",
+      "liveUrl": "https://portfolio-forge-4e0a9.web.app/",
+      "videoUrl": "",
+      "tags": [
+        "React",
+        "Firebase",
+        "JavaScript",
+        "CSS",
+        "HTML",
+        "Python"
+      ]
+    },
+    {
+      "title": "Movies & TV Show Browser",
+      "category": "Frontend / API",
+      "featured": false,
+      "description": "CineTrack is a sleek web application for tracking and discovering movies and TV shows. It uses the TMDb API to fetch and display dynamic content.",
+      "githubUrl": "https://github.com/IshaanMauss/cineTrack",
+      "liveUrl": "https://trackyourshows.netlify.app/",
+      "videoUrl": "",
+      "tags": [
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "Axios",
+        "TMDb API"
+      ]
+    },
+    {
+      "title": "JavaScript Tetris",
+      "category": "Frontend / Game",
+      "featured": false,
+      "description": "A classic arcade game built from the ground up with vanilla JavaScript and HTML5 Canvas, with piece manipulation and collision detection logic.",
+      "githubUrl": "https://github.com/IshaanMauss/TetrisGame",
+      "liveUrl": "https://nostalgic-tetrisgame.netlify.app/",
+      "videoUrl": "",
+      "tags": [
+        "JavaScript (ES6)",
+        "HTML5 Canvas",
+        "CSS"
+      ]
+    },
+    {
+      "title": "Dynamic Quiz App",
+      "category": "Frontend / API",
+      "featured": false,
+      "description": "An interactive quiz application that fetches questions from an external API, tracks scores, and provides a dynamic user experience.",
+      "githubUrl": "https://github.com/IshaanMauss/QuizGame",
+      "liveUrl": "https://myfunquizz.netlify.app/",
+      "videoUrl": "",
+      "tags": [
+        "JavaScript",
+        "Fetch API",
+        "HTML",
+        "CSS"
+      ]
+    }
+  ],
+  "skills": [
+    {
+      "group": "Backend",
+      "items": [
+        "Python",
+        "TypeScript",
+        "FastAPI",
+        "Node.js",
+        "Express",
+        "REST API design",
+        "WebSockets (Socket.io)",
+        "Razorpay integration"
+      ]
+    },
+    {
+      "group": "Data",
+      "items": [
+        "PostgreSQL",
+        "Row-level security",
+        "MongoDB",
+        "Supabase",
+        "Firestore"
+      ]
+    },
+    {
+      "group": "Architecture and security",
+      "items": [
+        "Multi-tenant design",
+        "Idempotency",
+        "Audit logging",
+        "Input validation",
+        "Quota enforcement",
+        "DFD-based security reviews"
+      ]
+    },
+    {
+      "group": "AI integration",
+      "items": [
+        "Prompt hardening",
+        "LLM output validation",
+        "Hallucination guards",
+        "Gemini API",
+        "Groq API",
+        "Cost and quota controls",
+        "API key isolation"
+      ]
+    },
+    {
+      "group": "Frontend",
+      "items": [
+        "React",
+        "JavaScript (ES6+)",
+        "Tailwind CSS",
+        "HTML5 Canvas",
+        "CSS"
+      ]
+    },
+    {
+      "group": "Platform and deployment",
+      "items": [
+        "Cloudflare",
+        "Vercel",
+        "Railway",
+        "Netlify",
+        "Render",
+        "Google Cloud Console",
+        "Firebase",
+        "Git and GitHub"
+      ]
+    }
+  ],
+  "now": [
+    {
+      "label": "Building",
+      "title": "Paperly",
+      "text": "Template engineering, ingestion hardening and the multi-tenant entitlement layer."
+    },
+    {
+      "label": "Hardening",
+      "title": "NeuroCogno",
+      "text": "Closing the last deploy-time items for client handover: secrets, TLS, WAF and database allowlisting."
+    },
+    {
+      "label": "Studying",
+      "title": "Advanced system architecture",
+      "text": "System design, distributed architecture and microservices, database and protocol internals, low-level design and security."
+    }
+  ],
+  "experience": [],
+  "seo": {
+    "title": "Ishaan Chaturvedi | Backend & Systems Engineer",
+    "description": "Principal engineer on Paperly, a multi-tenant EdTech SaaS. Backend systems, PostgreSQL, security-minded architecture and the projects behind them."
+  }
+}

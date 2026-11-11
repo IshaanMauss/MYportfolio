@@ -1,71 +1,231 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" data-theme="emerald">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ishaan Chaturvedi | Front-End Developer</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Ishaan Chaturvedi | Backend &amp; Systems Engineer</title>
+  <meta name="description" content="Principal engineer on Paperly, a multi-tenant EdTech SaaS. Backend systems, PostgreSQL, security-minded architecture and the projects behind them.">
+  <meta name="author" content="Ishaan Chaturvedi">
+  <meta name="theme-color" content="#050908">
+  <meta name="color-scheme" content="dark light">
 
-    
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    </head>
+  <!-- Apply saved theme before first paint (no flash) -->
+  <script>
+    try { var t = localStorage.getItem("theme"); if (/^(emerald|ember|cobalt|orchid|sage)$/.test(t)) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
 
+  <!-- Social cards -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Ishaan Chaturvedi | Backend &amp; Systems Engineer">
+  <meta property="og:description" content="Multi-tenant SaaS, PostgreSQL, security-minded architecture. Systems write-ups and projects.">
+  <meta property="og:url" content="https://lookupmyportfolio.netlify.app/">
+  <meta property="og:image" content="https://lookupmyportfolio.netlify.app/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Ishaan Chaturvedi | Backend &amp; Systems Engineer">
+  <meta name="twitter:image" content="https://lookupmyportfolio.netlify.app/og-image.png">
+
+  <!-- Favicons: SVG (swaps with the theme at runtime), PNG and ICO fallbacks -->
+  <link rel="canonical" href="https://lookupmyportfolio.netlify.app/">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" id="fav-svg">
+  <link rel="icon" href="favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="icon" href="favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png" sizes="180x180">
+  <link rel="manifest" href="site.webmanifest">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Ishaan Chaturvedi",
+    "jobTitle": "Backend & Systems Engineer",
+    "sameAs": ["https://github.com/IshaanMauss", "https://linkedin.com/in/ishaan-chaturvedi-9a58a533b"]
+  }
+  </script>
+</head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="progress" aria-hidden="true"></div>
+  <canvas id="net" aria-hidden="true"></canvas>
+  <div class="backdrop" aria-hidden="true"><div class="blob a"></div><div class="blob b"></div></div>
 
-    <div id="particles-js"></div>
-
-    <header class="main-header">
-        <nav>
-            <a href="#" class="nav-logo">IC</a>
-            <ul class="nav-links">
-                <li><a class="projects" href="#projects">Projects</a></li>
-                
-            </ul>
-        </nav>
-    </header>
-
-    <main>
-        <section class="hero">
-            <img src="images/new pic.jpg" alt="Ishaan" class="profile-pic">
-
-            <h1 class="hero-title">Hello, I'm Ishaan.</h1>
-            <h2 class="hero-subtitle">A Front-End Developer who builds things for the web.</h2>
-            <p class="hero-description">I specialize in creating clean, responsive, and user-friendly web experiences. Let's build something amazing together.</p>
-            <div class="social-links">
-                <a href="https://github.com/IshaanMauss" target="_blank" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                <a href="https://linkedin.com/in/ishaan-chaturvedi-9a58a533b" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-                <a href="mailto:ishaanchaturvedi444@gmail.com" aria-label="Email"><i class="fas fa-envelope"></i></a>
-            </div>
-        </section>
-
-        <section id="projects" class="projects-section">
-            <div class="section-header">
-                 <h2 class="section-title">My Work</h2>
-            </div>
-           
-            <div class="projects-grid" id="projects-grid"></div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="footer-content">
-        <p>Designed & Built by Ishaan Chaturvedi &copy; 2025</p>
+  <header class="nav">
+    <div class="nav-inner">
+      <a href="#top" class="logo" aria-label="Back to top"><span data-mark></span><span class="logo-text" id="logo-name">Ishaan Chaturvedi</span></a>
+      <nav aria-label="Primary">
+        <ul class="nav-links">
+          <li data-nav="systems"><a href="#systems">Systems</a></li>
+          <li><a href="#work">Work</a></li>
+          <li><a href="#stack">Stack</a></li>
+          <li><a href="#now">Now</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="nav-tools">
+        <div class="theme-switch" role="group" aria-label="Colour theme">
+          <button class="theme-dot" data-theme="emerald" aria-label="Graphite, emerald and gold" title="Graphite · Emerald · Gold" aria-pressed="true"></button>
+          <button class="theme-dot" data-theme="ember" aria-label="Charcoal, ember and teal" title="Charcoal · Ember · Teal" aria-pressed="false"></button>
+          <button class="theme-dot" data-theme="cobalt" aria-label="Midnight cobalt and acid lime" title="Midnight · Cobalt · Lime" aria-pressed="false"></button>
+          <button class="theme-dot" data-theme="orchid" aria-label="Orchid, violet and signal orange" title="Orchid · Violet · Orange" aria-pressed="false"></button>
+          <button class="theme-dot" data-theme="sage" aria-label="Sage, cream and burgundy" title="Sage · Cream · Burgundy" aria-pressed="false"></button>
         </div>
-    </footer>
+        <button class="kbd-btn" data-open-palette aria-label="Open command menu"><span class="kbd-label">Search</span><kbd>Ctrl K</kbd></button>
+        <button class="burger" id="burger" aria-expanded="false" aria-controls="drawer" aria-label="Open menu"><span></span></button>
+      </div>
+    </div>
+  </header>
 
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-<script>
-    particlesJS.load('particles-js', 'assets/particles.json', function() {
-        console.log('callback - particles.js config loaded');
-    });
-</script>
-    <script src="app.js"></script>
-    
+  <nav class="drawer" id="drawer" aria-label="Mobile">
+    <a href="#systems">Systems <span>01</span></a>
+    <a href="#work">Work <span>02</span></a>
+    <a href="#stack">Stack <span>03</span></a>
+    <a href="#now">Now <span>04</span></a>
+    <a href="#contact">Contact <span>05</span></a>
+    <div class="drawer-tools">
+      <button class="btn btn-ghost" type="button" data-open-palette>Search and jump</button>
+      <div>
+        <div class="drawer-label">Colour theme</div>
+        <div class="theme-switch" role="group" aria-label="Colour theme">
+          <button class="theme-dot" data-theme="emerald" aria-label="Graphite, emerald and gold" aria-pressed="true"></button>
+          <button class="theme-dot" data-theme="ember" aria-label="Charcoal, ember and teal" aria-pressed="false"></button>
+          <button class="theme-dot" data-theme="cobalt" aria-label="Midnight cobalt and acid lime" aria-pressed="false"></button>
+          <button class="theme-dot" data-theme="orchid" aria-label="Orchid, violet and signal orange" aria-pressed="false"></button>
+          <button class="theme-dot" data-theme="sage" aria-label="Sage, cream and burgundy" aria-pressed="false"></button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <span class="status"><i class="pulse"></i>Building Paperly</span>
+          <h1 class="hero-name" aria-label="Ishaan Chaturvedi">
+            <span class="line"><span id="hero-first">Ishaan</span></span>
+            <span class="line"><span id="hero-last">Chaturvedi</span></span>
+          </h1>
+          <p class="hero-headline" id="hero-headline">I design the systems behind the product.</p>
+          <p class="rotator" aria-hidden="true"><span id="rotator-text"></span><span class="caret"></span></p>
+          <p class="hero-bio" id="hero-bio"></p>
+          <div class="hero-cta" id="hero-cta">
+            <a class="btn btn-primary" href="#work">See the work <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <a class="btn btn-ghost" href="#contact">Get in touch</a>
+          </div>
+          <div class="socials" id="socials"></div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="portrait">
+            <div class="portrait-inner"><img id="hero-photo" src="images/ishaan.jpg" alt="Portrait of Ishaan Chaturvedi" width="640" height="800" fetchpriority="high"></div>
+          </div>
+          <div class="terminal" aria-hidden="true">
+            <div class="term-bar"><i></i><i></i><i></i><span>request trace · illustrative</span></div>
+            <div id="term-body"></div>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-cue" aria-hidden="true"><span>Scroll</span><i></i></div>
+    </section>
+
+    <section id="proof" aria-label="At a glance">
+      <div class="wrap">
+        <div class="stats reveal" id="stats"></div>
+        <div class="marquee" aria-hidden="true"><div class="marquee-track" id="marquee-track"></div></div>
+      </div>
+    </section>
+
+    <section id="systems">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">01 · Systems</span>
+          <h2 class="section-title">How I think about hard problems.</h2>
+          <p class="section-sub">Common backend problems, how I reasoned about each one, and what I chose.</p>
+        </div>
+        <div class="systems reveal">
+          <div class="sys-tabs" id="sys-tabs" role="tablist" aria-label="Systems write-ups" aria-orientation="vertical"></div>
+          <div id="sys-panels"></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">02 · Work</span>
+          <h2 class="section-title">Things I've built and shipped.</h2>
+          <p class="section-sub">From a multi-tenant SaaS backend to a real-time game server.</p>
+        </div>
+        <div class="filters reveal" id="filters" role="group" aria-label="Filter projects"></div>
+        <div class="grid" id="grid"></div>
+        <div class="rail-hint" id="rail-hint" aria-hidden="true"></div>
+      </div>
+    </section>
+
+    <section id="stack">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">03 · Stack</span>
+          <h2 class="section-title">The tools I reach for.</h2>
+        </div>
+        <div class="stack" id="stack-grid"></div>
+      </div>
+    </section>
+
+    <section id="now">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <span class="eyebrow">04 · Now</span>
+          <h2 class="section-title">What I'm working on right now.</h2>
+        </div>
+        <div class="now" id="now-grid"></div>
+        <div class="timeline" id="timeline"></div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap">
+        <div class="contact reveal">
+          <span class="eyebrow">05 · Contact</span>
+          <h2>Let's build something <em>solid.</em></h2>
+          <p>Have a backend problem, a product idea or a role in mind? I read every message.</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary" id="contact-mail-btn" href="#">Send an email <svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+            <button class="btn btn-ghost" id="copy-mail" type="button">Copy address</button>
+            <a class="btn btn-ghost" id="contact-gh" href="#" target="_blank" rel="noopener noreferrer">GitHub</a>
+            <a class="btn btn-ghost" id="contact-li" href="#" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+          </div>
+          <p class="mail-line" id="contact-mail"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <span>© <span id="footer-year">2026</span> <span id="footer-name">Ishaan Chaturvedi</span>. Designed and built by hand.</span>
+      <span><span class="kbd-hint">Press <kbd>/</kbd> or <kbd>Ctrl K</kbd> to jump anywhere · </span><a href="add-project.html">Studio</a></span>
+    </div>
+  </footer>
+
+  <div class="palette" id="palette" role="dialog" aria-modal="true" aria-label="Command menu">
+    <div class="pal-box">
+      <input id="pal-input" type="text" placeholder="Jump to a section, switch theme, open a link…" aria-label="Search commands" autocomplete="off" spellcheck="false">
+      <div class="pal-list" id="pal-list" role="listbox"></div>
+    </div>
+  </div>
+
+  <noscript><div class="wrap" style="padding:8rem 0"><h1>Ishaan Chaturvedi</h1><p>Backend and systems engineer. This site needs JavaScript to render its content. GitHub: <a href="https://github.com/IshaanMauss">IshaanMauss</a></p></div></noscript>
+
+  <script src="js/lib.js"></script>
+  <script src="js/app.js"></script>
 </body>
-
 </html>

@@ -1,93 +1,89 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="emerald">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add New Project</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Studio | Ishaan Chaturvedi</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#050908">
+  <script>
+    try { var t = localStorage.getItem("theme"); if (/^(emerald|ember|cobalt|orchid|sage)$/.test(t)) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" id="fav-svg">
+  <link rel="icon" href="favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="shortcut icon" href="favicon.ico">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://api.fontshare.com">
+  <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin>
+  <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+  <a class="skip-link" href="#studio">Skip to form</a>
+  <div class="backdrop" aria-hidden="true"><div class="blob a"></div><div class="blob b"></div></div>
 
-    <main class="form-container">
-        <h1>Add a New Project</h1>
-        <p>Fill out the details below. Paste a GitHub URL to auto-fill project details.</p>
-
-        <div class="add-project-layout">
-            <form id="project-form" class="project-form-grid">
-                <div class="form-group">
-                    <label for="githubUrl">GitHub URL</label>
-                    <div class="input-with-button">
-                        <input type="url" id="githubUrl" required>
-                        <button type="button" id="fetch-github-btn" class="btn-fetch">Fetch Repo Info</button>
-                    </div>
-                    <small id="github-status"></small>
-                </div>
-
-                <div class="form-group">
-                    <label for="title">Project Title</label>
-                    <input type="text" id="title" required>
-                </div>
-
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <textarea id="description" rows="4" required></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="liveUrl">Live Demo URL</label>
-                    <input type="url" id="liveUrl">
-                </div>
-
-                <div class="form-group">
-                    <label for="videoUrl">Video URL (e.g., from Cloudinary)</label>
-                    <input type="url" id="videoUrl">
-                </div>
-
-                <div class="form-group">
-                    <label for="tags">Technology Tags (comma-separated)</label>
-                    <input type="text" id="tags" placeholder="Auto-filled from README or enter manually" required>
-                </div>
-
-                <button type="submit" class="btn-generate">Generate Project Data</button>
-                 <button type="button" id="clear-form-btn" class="btn-clear">Clear Form</button>
-            </form>
-
-            <div class="live-preview-container">
-                <h2>Live Preview</h2>
-                <div id="live-preview-card" class="project-card">
-                    <div class="card-header">
-                        <i class="fas fa-folder"></i>
-                        <div class="card-links">
-                            <a href="#" target="_blank" aria-label="GitHub Code"><i class="fab fa-github"></i></a>
-                            <a href="#" target="_blank" aria-label="Live Demo"><i class="fas fa-external-link-alt"></i></a>
-                        </div>
-                    </div>
-                    <div class="video-container-preview" style="display: none;">
-                        <video controls muted loop playsinline>
-                            <source src="" type="video/mp4">
-                        </video>
-                    </div>
-                    <h3>Your Project Title</h3>
-                    <p>Your project description will appear here.</p>
-                    <footer>
-                        <span>Tag1</span>
-                        <span>Tag2</span>
-                    </footer>
-                </div>
-            </div>
+  <header class="nav scrolled">
+    <div class="nav-inner">
+      <a href="index.html" class="logo" aria-label="Back to portfolio"><span data-mark></span><span class="logo-text">Back to portfolio</span></a>
+      <div class="nav-tools">
+        <div class="theme-switch" role="group" aria-label="Colour theme">
+          <button class="theme-dot" data-theme="emerald" aria-label="Graphite, emerald and gold" aria-pressed="true"></button>
+          <button class="theme-dot" data-theme="ember" aria-label="Charcoal, ember and teal" aria-pressed="false"></button>
+          <button class="theme-dot" data-theme="cobalt" aria-label="Midnight cobalt and acid lime" aria-pressed="false"></button>
+          <button class="theme-dot" data-theme="orchid" aria-label="Orchid, violet and signal orange" aria-pressed="false"></button>
+          <button class="theme-dot" data-theme="sage" aria-label="Sage, cream and burgundy" aria-pressed="false"></button>
         </div>
+      </div>
+    </div>
+  </header>
 
+  <main class="studio wrap" id="studio">
+    <span class="eyebrow">Studio</span>
+    <h1>Add to your portfolio<br>without touching code.</h1>
+    <p class="section-sub">Pick what you're adding, fill the form, then copy the result. Everything on the site is driven by <code style="font-family:var(--font-mono);color:var(--accent)">data/portfolio.json</code>.</p>
 
-        <div id="output-container" style="display:none;">
-            <h2>Generated JSON</h2>
-            <textarea id="json-output" rows="15" readonly></textarea>
-            <button id="copy-json-btn" class="btn-copy">Copy to Clipboard</button>
+    <div class="seg" id="mode" role="group" aria-label="What are you adding?">
+      <button type="button" data-mode="project" aria-pressed="true">Project</button>
+      <button type="button" data-mode="system" aria-pressed="false">System write-up</button>
+      <button type="button" data-mode="skill" aria-pressed="false">Skill group</button>
+      <button type="button" data-mode="now" aria-pressed="false">Now card</button>
+    </div>
+
+    <div class="studio-layout">
+      <form class="panel" id="form" autocomplete="off" novalidate>
+        <div id="gh-box" class="field">
+          <label for="gh-url">Auto-fill from GitHub</label>
+          <div class="row">
+            <input id="gh-url" type="url" placeholder="https://github.com/you/repo">
+            <button type="button" class="btn btn-ghost" id="gh-fetch" style="--h:46px">Fetch</button>
+          </div>
+          <small id="gh-status" role="status"></small>
         </div>
-    </main>
+        <div id="fields"></div>
+        <div class="hero-cta" style="margin-top:.4rem">
+          <button type="button" class="btn btn-ghost" id="clear" style="--h:46px">Clear</button>
+        </div>
+      </form>
 
-    <script src="app.js"></script>
+      <div class="preview-col">
+        <div id="preview" aria-live="polite"></div>
+        <div class="panel">
+          <label for="out" class="sr-only">Generated JSON</label>
+          <textarea class="output" id="out" readonly spellcheck="false"></textarea>
+          <div class="hero-cta" style="margin-top:1rem">
+            <button type="button" class="btn btn-primary" id="copy-entry" style="--h:46px">Copy entry</button>
+            <button type="button" class="btn btn-ghost" id="copy-full" style="--h:46px">Copy full portfolio.json</button>
+          </div>
+          <p class="how" id="how"></p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/lib.js"></script>
+  <script src="js/studio.js"></script>
 </body>
 </html>
