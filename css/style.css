@@ -332,7 +332,7 @@ section.hero { min-height: 100svh; display: flex; align-items: center; padding: 
 }
 .portrait-inner { position: relative; width: 100%; height: 100%; border-radius: 26px; overflow: hidden; background: var(--bg-2); }
 .portrait img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
-.portrait-inner::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 84%, color-mix(in srgb, var(--bg) 45%, transparent)); }
+.portrait-inner::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 80%, color-mix(in srgb, var(--bg) 55%, transparent) 94%, var(--bg) 100%); }
 .terminal {
   position: absolute; left: clamp(-2.2rem, -4vw, -1rem); bottom: -11rem; width: min(94%, 310px);
   padding: 0.9rem 1rem 1rem; border-radius: 16px; z-index: 2;
@@ -433,6 +433,12 @@ section.hero { min-height: 100svh; display: flex; align-items: center; padding: 
 .card-links a:hover { color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); transform: translateY(-2px); }
 .card-links .lock { cursor: default; font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.08em; width: auto; padding: 0 0.7rem; }
 .card-links svg { width: 17px; height: 17px; }
+.card-links .lock { cursor: pointer; height: 38px; }
+.card-links .lock:hover { color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+.card-title-link { background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat; transition: background-size 0.35s var(--ease), color 0.25s; }
+.card-title-link:hover { background-size: 100% 1px; color: var(--accent); }
+.card.gated { cursor: pointer; }
+.card.gated:focus-visible { outline-offset: 4px; }
 .card h3 { font-family: var(--font-display); font-size: clamp(1.25rem, 2.2vw, 1.6rem); letter-spacing: -0.03em; line-height: 1.15; margin-top: 1.3rem; position: relative; }
 .card.w6 h3 { font-size: clamp(1.5rem, 2.8vw, 2.1rem); }
 .card p { color: var(--muted); margin-top: 0.7rem; font-size: 0.96rem; position: relative; flex: 1; }
@@ -462,6 +468,16 @@ section.hero { min-height: 100svh; display: flex; align-items: center; padding: 
 .tl-item small { font-family: var(--font-mono); color: var(--muted); font-size: 0.76rem; }
 .tl-item h3 { font-family: var(--font-display); font-size: 1.2rem; letter-spacing: -0.02em; }
 .tl-item p { color: var(--muted); margin-top: 0.3rem; }
+
+/* ---------- vista banner ---------- */
+.vista-frame { position: relative; margin: 0; border-radius: 28px; overflow: hidden; aspect-ratio: 21 / 9; background: var(--bg-2); box-shadow: inset 0 0 0 1px var(--line), 0 40px 90px -40px var(--glow); }
+.vista-frame img { width: 100%; height: 100%; object-fit: cover; object-position: 43% 55%; transform: scale(1.03); transition: transform 1.6s var(--ease); }
+.vista-frame.in img { transform: scale(1); }
+.vista-frame::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, transparent 38%, color-mix(in srgb, var(--bg) 88%, transparent) 100%),
+              linear-gradient(90deg, color-mix(in srgb, var(--primary) 16%, transparent), transparent 55%); mix-blend-mode: normal; }
+.vista-frame figcaption { position: absolute; z-index: 1; left: clamp(1.2rem, 4vw, 3rem); right: clamp(1.2rem, 4vw, 3rem); bottom: clamp(1.1rem, 3.4vw, 2.6rem); }
+.vista-frame figcaption p { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.035em; line-height: 1.05; font-size: clamp(1.5rem, 3.6vw, 2.8rem); margin-top: 0.6rem; max-width: 12ch; text-shadow: 0 2px 24px color-mix(in srgb, var(--bg) 70%, transparent); }
 
 /* ---------- contact ---------- */
 .contact {
@@ -494,6 +510,17 @@ section.hero { min-height: 100svh; display: flex; align-items: center; padding: 
 
 .toast { position: fixed; left: 50%; bottom: 1.5rem; z-index: 400; translate: -50% 150%; padding: 0.7rem 1.2rem; border-radius: 999px; background: var(--accent); color: var(--on-accent); font-weight: 600; font-size: 0.9rem; transition: translate 0.4s var(--ease); }
 .toast.show { translate: -50% 0; }
+
+/* ---------- modal ---------- */
+.modal { position: fixed; inset: 0; z-index: 350; display: none; align-items: center; justify-content: center; padding: 1rem; background: rgba(0, 0, 0, 0.6); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+.modal.open { display: flex; animation: fade 0.2s; }
+.modal-box { width: min(100%, 440px); padding: 1.8rem 1.6rem 1.5rem; border-radius: 24px; background: var(--surface-solid); box-shadow: inset 0 0 0 1px var(--line-strong), 0 40px 100px -20px rgba(0, 0, 0, 0.65); animation: panelIn 0.4s var(--ease); }
+.modal-icon { width: 46px; height: 46px; display: grid; place-items: center; border-radius: 14px; color: var(--accent); background: color-mix(in srgb, var(--accent) 12%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent); }
+.modal-icon svg { width: 22px; height: 22px; }
+.modal-box h3 { font-family: var(--font-display); font-size: 1.5rem; letter-spacing: -0.03em; margin-top: 1.1rem; }
+.modal-box p { color: var(--muted); margin-top: 0.6rem; }
+.modal-actions { display: flex; gap: 0.6rem; margin-top: 1.5rem; flex-wrap: wrap; }
+.modal-actions .btn { flex: 1 1 0; --h: 48px; }
 
 /* ---------- reveal ---------- */
 .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); transition-delay: var(--d, 0ms); }
@@ -634,6 +661,13 @@ section.hero { min-height: 100svh; display: flex; align-items: center; padding: 
   .now-card { padding: 1.1rem 1.15rem; border-radius: 16px; }
   .now-card h3 { font-size: 1.18rem; margin-top: 0.45rem; }
   .now-card p { font-size: 0.92rem; margin-top: 0.4rem; }
+
+  /* vista */
+  .vista-frame { aspect-ratio: 4 / 5; border-radius: 22px; }
+  .vista-frame::after { background: linear-gradient(180deg, color-mix(in srgb, var(--bg) 82%, transparent) 0%, transparent 42%, transparent 70%, color-mix(in srgb, var(--bg) 60%, transparent) 100%); }
+  .vista-frame figcaption { top: 1.3rem; bottom: auto; }
+  .vista-frame figcaption p { font-size: clamp(1.6rem, 8vw, 2.1rem); max-width: 13ch; }
+  .vista-frame img { object-position: 43% 50%; }
 
   /* contact */
   .contact { padding: 1.7rem 1.2rem 1.5rem; border-radius: 24px; }

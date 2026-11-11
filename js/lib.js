@@ -108,17 +108,19 @@ const PF = (() => {
     const vid = safeUrl(p.videoUrl);
     const links = [
       gh ? `<a href="${esc(gh)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(p.title)} source code on GitHub">${ICON.github}</a>` : "",
-      live ? `<a href="${esc(live)}" target="_blank" rel="noopener noreferrer" aria-label="${esc(p.title)} live demo">${ICON.external}</a>` : "",
-      !gh && !live && p.private ? `<span class="lock" title="Source and demo are private">PRIVATE</span>` : "",
+      live ? `<a href="${esc(live)}" target="_blank" rel="noopener noreferrer" aria-label="Open ${esc(p.title)} website">${ICON.external}</a>` : "",
+      p.private && !gh ? `<button type="button" class="lock" data-private="${esc(p.title)}" aria-label="${esc(p.title)} is a private repository. Read more">PRIVATE REPO</button>` : "",
     ].join("");
     const cats = p.filters?.length ? p.filters : [(p.category || "").split("/")[0].trim()].filter(Boolean);
+    const title = live ? `<a class="card-title-link" href="${esc(live)}" target="_blank" rel="noopener noreferrer">${esc(p.title)}</a>` : esc(p.title);
+    const gated = p.private && !gh && !live;      // private and nowhere to send people: the whole card explains why
     return `
-      <article class="card reveal" data-cats="${esc(cats.join("|"))}">
+      <article class="card reveal${gated ? " gated" : ""}" data-cats="${esc(cats.join("|"))}"${gated ? ` data-private="${esc(p.title)}" tabindex="0" role="button" aria-label="${esc(p.title)}: private repository, read more"` : ""}>
         <div class="card-top">
           <span class="card-cat">${esc(p.category || "Project")}</span>
           <div class="card-links">${links}</div>
         </div>
-        <h3>${esc(p.title)}</h3>
+        <h3>${title}</h3>
         <p>${esc(p.description)}</p>
         ${vid ? `<div class="video"><video controls preload="metadata" playsinline><source src="${esc(vid)}" type="video/mp4"></video></div>` : ""}
         <div class="chips">${chips(p.tags)}</div>
@@ -126,5 +128,34 @@ const PF = (() => {
       </article>`;
   }
 
-  return { THEMES, $, $$, reduced, esc, safeUrl, store, ICON, markSvg, faviconUri, setTheme, initTheme, toast, copyText, chips, projectCard };
+  /* A small modal used for "this repository is private". Closes on Esc, backdrop click or either button. */
+  const modalState = { prev: null };
+  function closeModal() {
+    const m = $("#modal");
+    if (!m || !m.classList.contains("open")) return;
+    m.classList.remove("open"); document.body.style.overflow = "";
+    modalState.prev?.focus?.();
+  }
+  function privateDialog(name) {
+    let m = $("#modal");
+    if (!m) {
+      m = document.createElement("div");
+      m.id = "modal"; m.className = "modal"; m.setAttribute("role", "dialog"); m.setAttribute("aria-modal", "true"); m.setAttribute("aria-labelledby", "modal-title");
+      m.innerHTML = `<div class="modal-box">
+        <div class="modal-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="16" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></svg></div>
+        <h3 id="modal-title">Private repository</h3>
+        <p id="modal-text"></p>
+        <div class="modal-actions"><a class="btn btn-primary" href="#contact" data-close>Get in touch</a><button class="btn btn-ghost" type="button" data-close>Close</button></div>
+      </div>`;
+      document.body.appendChild(m);
+      m.addEventListener("click", (e) => { if (e.target === m || e.target.closest("[data-close]")) closeModal(); });
+      addEventListener("keydown", (e) => { if (e.key === "Escape") closeModal(); });
+    }
+    modalState.prev = document.activeElement;
+    $("#modal-text", m).textContent = `${name} is built in a private repository, so the source code isn't public. I'm happy to walk through the architecture and the code on a call.`;
+    m.classList.add("open"); document.body.style.overflow = "hidden";
+    $(".btn-primary", m).focus();
+  }
+
+  return { THEMES, $, $$, reduced, esc, safeUrl, store, ICON, markSvg, faviconUri, setTheme, initTheme, toast, copyText, chips, projectCard, privateDialog };
 })();

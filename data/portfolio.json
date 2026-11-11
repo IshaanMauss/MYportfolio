@@ -10,7 +10,7 @@
       "Security-minded design"
     ],
     "headline": "I design the systems behind the product.",
-    "bio": "Principal engineer on Paperly, a multi-tenant EdTech platform that generates verified, parametric IGCSE and IB exam questions. I care about database internals, security boundaries and architecture that holds up under real use.",
+    "bio": "Principal engineer on Paperly NT, a multi-tenant EdTech platform that generates verified, parametric IGCSE and IB exam questions. I care about database internals, security boundaries and architecture that holds up under real use.",
     "photo": "images/ishaan.jpg",
     "photoAlt": "Portrait of Ishaan Chaturvedi",
     "resume": "",
@@ -168,12 +168,12 @@
   ],
   "projects": [
     {
-      "title": "Paperly",
+      "title": "Paperly NT",
       "category": "Full-stack / SaaS",
       "featured": true,
       "description": "EdTech SaaS that generates verified, parametric IGCSE and IB exam questions. Includes a teacher-facing module, an admin back office, an AI-assisted ingestion pipeline and a multi-tenant entitlement layer.",
       "githubUrl": "",
-      "liveUrl": "",
+      "liveUrl": "https://www.paperly-nt.com/",
       "videoUrl": "",
       "private": true,
       "tags": [
@@ -361,7 +361,7 @@
   "now": [
     {
       "label": "Building",
-      "title": "Paperly",
+      "title": "Paperly NT",
       "text": "Template engineering, ingestion hardening and the multi-tenant entitlement layer."
     },
     {
@@ -378,6 +378,6 @@
   "experience": [],
   "seo": {
     "title": "Ishaan Chaturvedi | Backend & Systems Engineer",
-    "description": "Principal engineer on Paperly, a multi-tenant EdTech SaaS. Backend systems, PostgreSQL, security-minded architecture and the projects behind them."
+    "description": "Principal engineer on Paperly NT, a multi-tenant EdTech SaaS. Backend systems, PostgreSQL, security-minded architecture and the projects behind them."
   }
 }

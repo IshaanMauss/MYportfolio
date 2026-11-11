@@ -1,6 +1,6 @@
 /* Main page. Everything on screen is rendered from data/portfolio.json */
 (() => {
-  const { $, $$, esc, safeUrl, ICON, reduced, chips, projectCard, copyText, toast, setTheme } = PF;
+  const { $, $$, esc, safeUrl, ICON, reduced, chips, projectCard, privateDialog, copyText, toast, setTheme } = PF;
 
   PF.initTheme();
 
@@ -160,6 +160,15 @@
     });
     layout();
 
+    grid.addEventListener("click", (e) => {
+      const t = e.target.closest("[data-private]");
+      if (t && !e.target.closest("a")) privateDialog(t.dataset.private);
+    });
+    grid.addEventListener("keydown", (e) => {
+      const c = e.target.closest(".card.gated");
+      if (c && e.target === c && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); privateDialog(c.dataset.private); }
+    });
+
     /* phone rail: position dots under the swipeable cards */
     const hint = $("#rail-hint");
     const railDots = () => {
@@ -246,7 +255,7 @@
   function startNet() {
     const c = $("#net"), ctx = c.getContext("2d");
     let w, h, nodes = [], raf = 0, frame = 0, burstId = 0, arcId = 0, seen = new Set();
-    let rgb = "82,232,174", hot = "255,200,87", light = false;
+    let rgb = "82,232,174", hot = "255,200,87", light = false, lite = false;   // lite: phones get a calmer field
     const mouse = { x: -999, y: -999, on: false };
     const bolts = new Map(), bursts = [], arcs = [];
     let corona = [];
@@ -261,9 +270,10 @@
     const resize = () => {
       const dpr = Math.min(devicePixelRatio || 1, 2);
       w = innerWidth; h = innerHeight;
+      lite = w <= 640 || matchMedia("(pointer: coarse)").matches;
       c.width = w * dpr; c.height = h * dpr;
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      const n = Math.round(Math.min(125, Math.max(34, (w * h) / 13000)));
+      const n = Math.round(Math.min(lite ? 55 : 125, Math.max(lite ? 26 : 34, (w * h) / (lite ? 16000 : 13000))));
       nodes = Array.from({ length: n }, () => {
         const vx = (Math.random() - 0.5) * 0.3, vy = (Math.random() - 0.5) * 0.3;
         return { x: Math.random() * w, y: Math.random() * h, vx, vy, bvx: vx, bvy: vy, r: Math.random() * 1.3 + 0.7, hot: Math.random() < 0.09, charge: 0 };
@@ -310,6 +320,7 @@
     }
 
     function strike(key, x1, y1, x2, y2, k, forkCount = 0) {
+      if (lite) { k *= 0.4; forkCount = 0; }
       const dx = x2 - x1, dy = y2 - y1, len = Math.hypot(dx, dy) || 1;
       let b = bolts.get(key);
       if (!b || frame >= b.next) {                       // a fresh "stroke": new channel, brief flash
@@ -399,24 +410,24 @@
           if (d < s.r) inRange.push({ i, d });
         }
         inRange.sort((p, q) => p.d - q.d);
-        inRange.length = Math.min(inRange.length, s.max);
+        inRange.length = Math.min(inRange.length, lite ? Math.ceil(s.max / 2.5) : s.max);
         inRange.forEach((p, idx) => {
           const a = nodes[p.i], k = Math.min(1, (1 - p.d / s.r) * 1.5 + 0.2) * s.k;
           a.charge = Math.max(a.charge, k);
           strike(s.id + ":" + p.i, s.x, s.y, a.x, a.y, k, idx < 6 ? 2 : 0);
           if (idx) {                                   // chain: lightning hops to the next-nearest node
             const b = nodes[inRange[idx - 1].i], d2 = Math.hypot(a.x - b.x, a.y - b.y);
-            if (d2 < 130) strike(s.id + ":c" + p.i, b.x, b.y, a.x, a.y, k * 0.7, 0);
+            if (!lite && d2 < 130) strike(s.id + ":c" + p.i, b.x, b.y, a.x, a.y, k * 0.7, 0);
           }
         });
         if (s.burst) {                                  // expanding shock ring
-          ctx.strokeStyle = `rgba(${hot},${0.35 * s.k})`; ctx.lineWidth = 1.5;
+          ctx.strokeStyle = `rgba(${hot},${(lite ? 0.18 : 0.35) * s.k})`; ctx.lineWidth = 1.5;
           ctx.beginPath(); ctx.arc(s.x, s.y, s.r * s.t, 0, Math.PI * 2); ctx.stroke();
         }
       }
 
       /* idle ambience: a short spark between two close nodes now and then */
-      if (!still && move && frame % 55 === 0) {
+      if (!still && move && frame % (lite ? 170 : 55) === 0) {
         const a = nodes[(Math.random() * nodes.length) | 0];
         let best = null, bd = 150;
         for (const b of nodes) { if (b === a) continue; const d = Math.hypot(a.x - b.x, a.y - b.y); if (d < bd) { bd = d; best = b; } }
@@ -430,13 +441,13 @@
 
       /* the cursor: a flickering plasma ball with corona sparks */
       if (!still && mouse.on) {
-        const rr = 34 + Math.random() * 12;
+        const rr = (34 + Math.random() * 12) * (lite ? 0.55 : 1);
         const g = ctx.createRadialGradient(mouse.x, mouse.y, 0, mouse.x, mouse.y, rr);
-        g.addColorStop(0, light ? `rgba(${hot},0.5)` : "rgba(255,255,255,0.55)");
-        g.addColorStop(0.25, `rgba(${hot},0.35)`); g.addColorStop(1, `rgba(${hot},0)`);
+        g.addColorStop(0, light ? `rgba(${hot},${lite ? 0.25 : 0.5})` : `rgba(255,255,255,${lite ? 0.25 : 0.55})`);
+        g.addColorStop(0.25, `rgba(${hot},${lite ? 0.16 : 0.35})`); g.addColorStop(1, `rgba(${hot},0)`);
         ctx.fillStyle = g; ctx.beginPath(); ctx.arc(mouse.x, mouse.y, rr, 0, Math.PI * 2); ctx.fill();
         if (frame % 2 === 0) {
-          corona = Array.from({ length: 6 }, () => {
+          corona = Array.from({ length: lite ? 2 : 6 }, () => {
             const ang = Math.random() * Math.PI * 2, l = 10 + Math.random() * 22;
             return [ang, l, (Math.random() - 0.5) * 0.7];
           });
@@ -447,7 +458,7 @@
           ctx.beginPath(); ctx.moveTo(mouse.x, mouse.y);
           ctx.lineTo(mx + Math.cos(ang + 1.57) * bend * 6, my + Math.sin(ang + 1.57) * bend * 6);
           ctx.lineTo(mouse.x + Math.cos(ang + bend) * l, mouse.y + Math.sin(ang + bend) * l);
-          ctx.strokeStyle = `rgba(${hot},0.5)`; ctx.lineWidth = 1.4; ctx.stroke();
+          ctx.strokeStyle = `rgba(${hot},${lite ? 0.28 : 0.5})`; ctx.lineWidth = 1.4; ctx.stroke();
         }
       }
       ctx.globalCompositeOperation = "source-over";
